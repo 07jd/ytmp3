@@ -11,6 +11,7 @@ Bash script, debian only, that allows to download multiple mp3 audios from youtu
 
 **Text File format**
  - The text file should contain one youtube link per line, invalid links wont be downloaded.
+ - Give-it a shot. `./ytmp3 test`
 
 **Dependecies** (automatically checked by the script)
  - Python 3.11.X or higher
