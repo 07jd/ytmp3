@@ -6,7 +6,7 @@ Bash script, debian only, that allows to download multiple mp3 audios from youtu
 **How to use**
 
  - Clone the repository and go inside, `cd ytmp3`
- - `./ytmp3 [text file path]`
+ - `./ytmp3 [text file path]` (if you can't execute-it, make sure u run `chmod +x ytmp3`)
  - Downloaded audios can be found in `./ytmp3/audios/`
 
 **Text File format**
