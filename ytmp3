@@ -1,0 +1,73 @@
+#!/bin/bash
+
+file=$1
+#Check if it was give an argument
+if [[ $# -eq 0 ]]; then
+  echo "ytmp3 [file path]"
+  exit 1
+#Check if the file is accessible
+elif [ ! -f "$file" ] || [ ! -r "$file" ]; then
+  echo "Not possible to read the file: $file."
+  exit 1
+elif [ ! -s "$file" ]; then
+  echo "The file $file, is empty."
+  exit 1
+fi
+
+
+
+dependecies() {
+  #Check if yt-dlp_linux is on the program root
+  if ! type -P ffmpeg > /dev/null; then
+    echo "Ffmpeg not installed, proceed with installation? (Y/y)";read -r ans
+    if [ "$ans" == "Y" ] || [ "$ans" == "y" ]; then
+      $(sudo apt update & sudo apt upgrade)
+      $(sudo apt install ffmpeg)
+      $(clear)
+    else
+      echo "Installation canceled."
+      echo
+      exit 1
+    fi
+  fi
+  #Check if pythons is installed
+  if ! type -P python > /dev/null; then
+    echo "Python not installed, proceed with installation? (Y/y)";read -r ans
+    if [ "$ans" == "Y" ] || [ "$ans" == "y" ]; then
+      $(sudo apt update & sudo apt upgrade)
+      $(sudo apt install python)
+      $(clear)
+    else
+      echo "Installation canceled."
+      echo
+      exit 1
+    fi
+  fi
+  #Check if yt-dlp_linux can be executed.
+  if ! type -P ./yt-dlp_linux > /dev/null; then
+    echo "yt-dlp_linux not on the script root, proceed with download? (Y/y)"
+    echo "Origin: https://github.com/yt-dlp/yt-dlp/releases/download/2024.04.09/yt-dlp_linux";read -r ans
+    if [ "$ans" == "Y" ] || [ "$ans" == "y" ]; then
+      $(wget https://github.com/yt-dlp/yt-dlp/releases/download/2024.04.09/yt-dlp_linux)
+      $(chmod +x ./yt-dlp_linux)
+      $(clear)
+    else
+      echo "Installation canceled."
+      echo
+      exit 1
+    fi
+  fi 
+}
+
+transfer() {
+  while IFS= read -r link; do
+    #Gets the title of the video
+    title=$(./yt-dlp_linux --get-title "$link")
+    #Transfer's the file
+    $(./yt-dlp_linux -x --audio-format mp3 $link -o ./audios/"$title")
+    echo "($title) transferido."
+  done < "$file"
+}
+
+dependecies
+transfer
