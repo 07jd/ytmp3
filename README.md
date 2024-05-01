@@ -1,5 +1,6 @@
 # YTmp3
-**Brief description**,
+**Brief description**
+
 Bash script, debian only, that allows to download multiple mp3 audios from youtube from links saved on a file, using yt-dlp (https://github.com/yt-dlp/yt-dlp).
 
 **How to use**
