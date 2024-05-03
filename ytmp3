@@ -65,7 +65,7 @@ transfer() {
     title=$(./yt-dlp_linux --get-title "$link")
     #Transfer's the file
     echo "$title:"
-    ./yt-dlp_linux --quiet --no-warnings --progress -x --audio-format mp3 $link -o ./audios/"$title"
+    ./yt-dlp_linux --quiet --no-warnings --progress --no-playlist -x --audio-format mp3 $link -o ./audios/"$title"
     clear
     echo "($title) transferred."
   done < "$file"
